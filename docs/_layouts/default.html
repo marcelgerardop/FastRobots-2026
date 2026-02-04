@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,18 +7,34 @@
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    :root { --accent: #dc3545; }
-    .navbar-brand, .brand-accent { color: var(--accent) !important; font-weight: 700; }
-    body { background-color: #1a1a1a; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
+    :root {
+      --ocean-deep: #0a4d68;
+      --ocean-mid: #088395;
+      --ocean-light: #05bfdb;
+      --ocean-foam: #00ffca;
+      --ocean-bg: #f0f9ff;
+      --ocean-card: #e0f4fc;
+      --ocean-text: #1a3a4a;
+    }
+    body { background-color: #ffffff; color: var(--ocean-text); min-height: 100vh; display: flex; flex-direction: column; }
     main { flex: 1; }
-    .card { background-color: #2d2d2d; border: 1px solid #404040; color: #e0e0e0; }
-    .card a { color: #66bfff; text-decoration: none; }
-    .card a:hover { text-decoration: underline; }
-    footer { background-color: #1a1a1a; border-top: 1px solid #333; }
+    .navbar { background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%) !important; }
+    .navbar-brand { color: #fff !important; font-weight: 700; }
+    .navbar-brand:hover { color: var(--ocean-foam) !important; }
+    .nav-link { color: rgba(255,255,255,0.9) !important; }
+    .nav-link:hover { color: var(--ocean-foam) !important; }
+    .card { background-color: var(--ocean-card); border: 1px solid var(--ocean-light); color: var(--ocean-text); }
+    .card a { color: var(--ocean-mid); text-decoration: none; font-weight: 500; }
+    .card a:hover { color: var(--ocean-deep); text-decoration: underline; }
+    .text-secondary { color: var(--ocean-mid) !important; }
+    hr.border-ocean { border: 0; border-top: 1px solid var(--ocean-light); opacity: 0.7; }
+    footer { background-color: var(--ocean-bg); border-top: 1px solid var(--ocean-light); color: var(--ocean-mid); }
+    footer a { color: var(--ocean-mid); }
+    footer a:hover { color: var(--ocean-deep); }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark border-bottom border-secondary">
+  <nav class="navbar navbar-expand-md navbar-dark border-bottom border-0 shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="{{ '/' | relative_url }}">{{ site.author_name | default: site.title }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,8 +53,8 @@
     {{ content }}
   </main>
 
-  <footer class="py-4 text-center text-secondary small">
-    <a href="https://github.com/{{ site.github.repository_nwo | default: 'github' }}" class="text-secondary me-2" aria-label="GitHub">{% include icon-github.html %}</a>
+  <footer class="py-4 text-center small">
+    <a href="https://github.com/{{ site.github.repository_nwo | default: 'github' }}" class="me-2" aria-label="GitHub">{% include icon-github.html %}</a>
     <span>Powered by Bootstrap &amp; Jekyll</span>
   </footer>
 
