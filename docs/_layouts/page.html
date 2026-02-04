@@ -1,0 +1,11 @@
+---
+layout: default
+---
+
+<article>
+  <header class="mb-4">
+    <h1 class="display-6">{{ page.title }}</h1>
+    {% if page.date %}<p class="text-secondary small">Posted on {{ page.date | date: "%Y-%m-%d" }}</p>{% endif %}
+  </header>
+  <div class="content">{{ content }}</div>
+</article>
