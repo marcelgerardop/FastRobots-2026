@@ -31,6 +31,17 @@
     footer { background-color: var(--ocean-bg); border-top: 1px solid var(--ocean-light); color: var(--ocean-mid); }
     footer a { color: var(--ocean-mid); }
     footer a:hover { color: var(--ocean-deep); }
+    /* Page content: sans-serif, readable size */
+    body, .content { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 1.05rem; line-height: 1.6; }
+    .content h1, .content h2, .content h3 { font-family: inherit; }
+    /* Code snippets */
+    .content pre, .content .highlight pre { font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace; font-size: 0.9rem; background: #f0f4f8; padding: 1rem 1.25rem; border-radius: 8px; overflow-x: auto; border: 1px solid #cbd5e0; margin: 0.75rem 0; }
+    .content code { font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace; font-size: 0.9em; background: #f0f4f8; padding: 0.2em 0.4em; border-radius: 4px; border: 1px solid #e2e8f0; }
+    .content pre code { background: none; padding: 0; border: none; }
+    /* Media block: clear separation after list items */
+    .content .lab-media { margin-top: 0.5rem; margin-bottom: 1.25rem; display: block; }
+    .content .lab-media img { display: block; margin-top: 0.25rem; }
+    .content .lab-media video { display: block; margin-top: 0.25rem; }
   </style>
 </head>
 <body>

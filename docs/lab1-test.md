@@ -7,22 +7,33 @@ date: 2025-01-30
 ## Lab 1A (Arduino IDE & Artemis)
 
 - **Blink**
-  <video src="{{ 'images/Blink-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
-  [Open video]({{ 'images/Blink-video.mp4' | relative_url }}) if it doesn’t play above.
+
+<div class="lab-media">
+<video src="{{ 'images/Blink-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
+<p><a href="{{ 'images/Blink-video.mp4' | relative_url }}">Open video</a> if it doesn’t play above.</p>
+</div>
 
 - **Serial**
-  <video src="{{ 'images/Example4_Serial-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
-  [Open video]({{ 'images/Example4_Serial-video.mp4' | relative_url }}) if it doesn’t play above.
+
+<div class="lab-media">
+<video src="{{ 'images/Example4_Serial-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
+<p><a href="{{ 'images/Example4_Serial-video.mp4' | relative_url }}">Open video</a> if it doesn’t play above.</p>
+</div>
 
 - **Temperature**
-  <video src="{{ 'images/Example2_analogRead-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
-  [Open video]({{ 'images/Example2_analogRead-video.mp4' | relative_url }}) if it doesn’t play above.
 
-  <p><a href="{{ 'images/Example2_analogRead_Plot.png' | relative_url }}"><img src="{{ 'images/Example2_analogRead_Plot.png' | relative_url }}" alt="Temperature plot" style="max-width:100%;" /></a></p>
+<div class="lab-media">
+<video src="{{ 'images/Example2_analogRead-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
+<p><a href="{{ 'images/Example2_analogRead-video.mp4' | relative_url }}">Open video</a> if it doesn’t play above.</p>
+<p><a href="{{ 'images/Example2_analogRead_Plot.png' | relative_url }}"><img src="{{ 'images/Example2_analogRead_Plot.png' | relative_url }}" alt="Temperature plot" style="max-width:100%;" /></a></p>
+</div>
 
 - **Microphone**
-  <video src="{{ 'images/Example1_MicrophoneOutput-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
-  [Open video]({{ 'images/Example1_MicrophoneOutput-video.mp4' | relative_url }}) if it doesn’t play above.
+
+<div class="lab-media">
+<video src="{{ 'images/Example1_MicrophoneOutput-video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
+<p><a href="{{ 'images/Example1_MicrophoneOutput-video.mp4' | relative_url }}">Open video</a> if it doesn’t play above.</p>
+</div>
 
 ---
 
@@ -43,12 +54,16 @@ characteristics:
 
 - **BLE service UUID:**
 
+<div class="lab-media">
   <p><a href="{{ 'images/bluetooth-uuid.png' | relative_url }}"><img src="{{ 'images/bluetooth-uuid.png' | relative_url }}" alt="BLE UUID" style="max-width:100%;" /></a></p>
+</div>
 
 BLE connection:
 
+<div class="lab-media">
   <p><a href="{{ 'images/connection-to-bluetooth-arduino.png' | relative_url }}"><img src="{{ 'images/connection-to-bluetooth-arduino.png' | relative_url }}" alt="Connection" style="max-width:100%;" /></a></p>
   <p><a href="{{ 'images/bluetooth-connected.png' | relative_url }}"><img src="{{ 'images/bluetooth-connected.png' | relative_url }}" alt="Connected" style="max-width:100%;" /></a></p>
+</div>
 
 ---
 
@@ -80,7 +95,9 @@ case ECHO:
 
 Artemis reads the string with `get_next_value(char_arr)`, and builds:
 
+<div class="lab-media">
   <p><a href="{{ 'images/arduino-output-echo.png' | relative_url }}"><img src="{{ 'images/arduino-output-echo.png' | relative_url }}" alt="Arduino ECHO output" style="max-width:100%;" /></a></p>
+</div>
 
 ### Task 2: SEND_THREE_FLOATS
 
@@ -122,7 +139,9 @@ case SEND_THREE_FLOATS:
 
 Arduino serial monitor output:
 
+<div class="lab-media">
   <p><a href="{{ 'images/arduino-output-task2-floats.png' | relative_url }}"><img src="{{ 'images/arduino-output-task2-floats.png' | relative_url }}" alt="Three floats serial output" style="max-width:100%;" /></a></p>
+</div>
 
 ### Task 3: GET_TIME_MILLIS
 
@@ -144,13 +163,17 @@ case GET_TIME_MILLIS:
 
 Time string printed and command in Jupyter:
 
+<div class="lab-media">
   <p><a href="{{ 'images/task3-time-and-command.png' | relative_url }}"><img src="{{ 'images/task3-time-and-command.png' | relative_url }}" alt="Task 3 time and command" style="max-width:100%;" /></a></p>
+</div>
 
 ### Task 4: Notification handler for time string
 
 I set up a notification handler in Python to receive the string value (BLEStringCharacteristic) from the Artemis; in the callback I parse the string and extract the time. I also tested it in a loop to see if it would print out, for fun.
 
+<div class="lab-media">
   <p><a href="{{ 'images/task4-function-and-command-output.png' | relative_url }}"><img src="{{ 'images/task4-function-and-command-output.png' | relative_url }}" alt="Task 4 handler and output" style="max-width:100%;" /></a></p>
+</div>
 
 ### Task 5: Loop – time in ms and data rate
 
@@ -175,7 +198,9 @@ case SEND_TIME_LOOP:
     break;
 ```
 
+<div class="lab-media">
   <p><a href="{{ 'images/task5-command-output.png' | relative_url }}"><img src="{{ 'images/task5-command-output.png' | relative_url }}" alt="Task 5 command and output" style="max-width:100%;" /></a></p>
+</div>
 
 ### Task 6: Timestamp array and SEND_TIME_DATA
 
@@ -228,11 +253,15 @@ case SEND_TIME_DATA:
 
 Arduino output when sending the timestamps:
 
+<div class="lab-media">
   <p><a href="{{ 'images/task6-arduino-output.png' | relative_url }}"><img src="{{ 'images/task6-arduino-output.png' | relative_url }}" alt="Task 6 Arduino output" style="max-width:100%;" /></a></p>
+</div>
 
 Jupyter commands used to test the timestamp array rate:
 
+<div class="lab-media">
   <p><a href="{{ 'images/task6-jupyter-output.png' | relative_url }}"><img src="{{ 'images/task6-jupyter-output.png' | relative_url }}" alt="Task 6 Jupyter output" style="max-width:100%;" /></a></p>
+</div>
 
 ### Task 7: Temperature array and GET_TEMP_READINGS
 
@@ -261,11 +290,15 @@ case GET_TEMP_READINGS:
 
 Jupyter commands:
 
+<div class="lab-media">
   <p><a href="{{ 'images/task7-jupyter-command-output.png' | relative_url }}"><img src="{{ 'images/task7-jupyter-command-output.png' | relative_url }}" alt="Task 7 Jupyter output" style="max-width:100%;" /></a></p>
+</div>
 
 Arduino output after running the commands:
 
+<div class="lab-media">
   <p><a href="{{ 'images/task7-arduino-ouput.png' | relative_url }}"><img src="{{ 'images/task7-arduino-ouput.png' | relative_url }}" alt="Task 7 Arduino output" style="max-width:100%;" /></a></p>
+</div>
 
 ---
 
