@@ -31,6 +31,13 @@ title: Home
   <div class="col-md-6 col-lg-4">
     <div class="card h-100">
       <div class="card-body">
+        <h3 class="card-title h6"><a href="{{ 'lab1-test.html' | relative_url }}">Lab 1: Artemis and Bluetooth</a></h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100">
+      <div class="card-body">
         <h3 class="card-title h6"><a href="{{ 'lab2.html' | relative_url }}">Lab 2: IMU</a></h3>
       </div>
     </div>
