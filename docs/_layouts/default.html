@@ -6,6 +6,7 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --ocean-deep: #0a4d68;
@@ -16,27 +17,34 @@
       --ocean-card: #e0f4fc;
       --ocean-text: #1a3a4a;
     }
-    body { background-color: #ffffff; color: var(--ocean-text); min-height: 100vh; display: flex; flex-direction: column; }
+    body { background-color: #ffffff; color: var(--ocean-text); min-height: 100vh; display: flex; flex-direction: column; font-family: 'Open Sans', sans-serif; font-size: 1.25rem; line-height: 1.6; }
     main { flex: 1; }
-    .navbar { background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%) !important; }
-    .navbar-brand { color: #fff !important; font-weight: 700; }
+    .navbar { background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%) !important; font-family: 'Open Sans', sans-serif; }
+    .navbar-brand { color: #fff !important; font-weight: 700; font-family: 'Montserrat', sans-serif !important; }
     .navbar-brand:hover { color: var(--ocean-foam) !important; }
     .nav-link { color: rgba(255,255,255,0.9) !important; }
     .nav-link:hover { color: var(--ocean-foam) !important; }
     .card { background-color: var(--ocean-card); border: 1px solid var(--ocean-light); color: var(--ocean-text); }
     .card a { color: var(--ocean-mid); text-decoration: none; font-weight: 500; }
     .card a:hover { color: var(--ocean-deep); text-decoration: underline; }
+    .card-coming-soon { background-color: #b8d4dc !important; border-color: #8fb8c4 !important; color: #5a7a84 !important; cursor: not-allowed; opacity: 0.85; }
+    .card-coming-soon .card-title { color: inherit !important; }
+    .card-coming-soon .badge-coming { font-size: 0.75rem; font-weight: 500; }
+    .card .card-title { font-family: 'Montserrat', sans-serif !important; font-size: 1.1rem; }
     .text-secondary { color: var(--ocean-mid) !important; }
     hr.border-ocean { border: 0; border-top: 1px solid var(--ocean-light); opacity: 0.7; }
     footer { background-color: var(--ocean-bg); border-top: 1px solid var(--ocean-light); color: var(--ocean-mid); }
     footer a { color: var(--ocean-mid); }
     footer a:hover { color: var(--ocean-deep); }
-    /* Page content: sans-serif, readable size */
-    body, .content { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 1.05rem; line-height: 1.6; }
-    .content h1, .content h2, .content h3 { font-family: inherit; }
+    footer { font-family: 'Open Sans', sans-serif; }
+    /* Page content: Open Sans, 3pt larger base */
+    .content { font-family: 'Open Sans', sans-serif; font-size: 1.25rem; line-height: 1.6; }
+    .content h1, .content h2, .content h3, .content h4, .content .display-5, .content .display-6 { font-family: 'Montserrat', sans-serif !important; }
+    .content .lead { font-family: 'Open Sans', sans-serif; font-size: 1.35rem; }
+    main .display-5, main .display-6, main h1, main h2, main h3, main h4 { font-family: 'Montserrat', sans-serif !important; }
     /* Code snippets */
-    .content pre, .content .highlight pre { font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace; font-size: 0.9rem; background: #f0f4f8; padding: 1rem 1.25rem; border-radius: 8px; overflow-x: auto; border: 1px solid #cbd5e0; margin: 0.75rem 0; }
-    .content code { font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace; font-size: 0.9em; background: #f0f4f8; padding: 0.2em 0.4em; border-radius: 4px; border: 1px solid #e2e8f0; }
+    .content pre, .content .highlight pre { font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace; font-size: 1rem; background: #f0f4f8; padding: 1rem 1.25rem; border-radius: 8px; overflow-x: auto; border: 1px solid #cbd5e0; margin: 0.75rem 0; }
+    .content code { font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace; font-size: 0.95em; background: #f0f4f8; padding: 0.2em 0.4em; border-radius: 4px; border: 1px solid #e2e8f0; }
     .content pre code { background: none; padding: 0; border: none; }
     /* Media block: clear separation after list items */
     .content .lab-media { margin-top: 0.5rem; margin-bottom: 1.25rem; display: block; }

@@ -29,79 +29,79 @@ title: Home
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab2.html' | relative_url }}">Lab 2: IMU</a></h3>
+        <h3 class="card-title h6">Lab 2: IMU <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab3.html' | relative_url }}">Lab 3: ToF</a></h3>
+        <h3 class="card-title h6">Lab 3: ToF <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab4.html' | relative_url }}">Lab 4: Motor Drivers and Open Loop Control</a></h3>
+        <h3 class="card-title h6">Lab 4: Motor Drivers and Open Loop Control <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab5.html' | relative_url }}">Lab 5: Linear PID and Linear Interpolation</a></h3>
+        <h3 class="card-title h6">Lab 5: Linear PID and Linear Interpolation <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab6.html' | relative_url }}">Lab 6: Orientation PID</a></h3>
+        <h3 class="card-title h6">Lab 6: Orientation PID <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab7.html' | relative_url }}">Lab 7: Kalman Filtering</a></h3>
+        <h3 class="card-title h6">Lab 7: Kalman Filtering <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab8.html' | relative_url }}">Lab 8: Stunts!</a></h3>
+        <h3 class="card-title h6">Lab 8: Stunts! <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab9.html' | relative_url }}">Lab 9: Mapping</a></h3>
+        <h3 class="card-title h6">Lab 9: Mapping <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab10.html' | relative_url }}">Lab 10: Localization (sim)</a></h3>
+        <h3 class="card-title h6">Lab 10: Localization (sim) <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab11.html' | relative_url }}">Lab 11: Localization (real)</a></h3>
+        <h3 class="card-title h6">Lab 11: Localization (real) <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card h-100">
+    <div class="card card-coming-soon h-100">
       <div class="card-body">
-        <h3 class="card-title h6"><a href="{{ 'lab12.html' | relative_url }}">Lab 12: Planning and Execution</a></h3>
+        <h3 class="card-title h6">Lab 12: Planning and Execution <span class="badge badge-coming text-muted">Coming soon</span></h3>
       </div>
     </div>
   </div>
