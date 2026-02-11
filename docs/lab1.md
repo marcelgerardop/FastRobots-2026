@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Lab 1 - Artemis and Bluetooth
-date: 2025-01-30
+date: 2026-01-30
 ---
 ---
 
