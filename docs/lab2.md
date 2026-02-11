@@ -4,10 +4,6 @@ title: Lab 2 - IMU
 date: 2026-02-10
 ---
 
-## Lab 2 – IMU
-
----
-
 ### 1. Setup the IMU
 
 IMU connection:
@@ -88,6 +84,7 @@ Serial plotter at pitch and roll orientations (−90°, 0°, +90°):
 </div>
 
 The accelerometer was reasonably accrate. I observe the values within ~1-2 degrees of the expected values. There were also small ofsets for pitch (~0.7) and roll (~1.8) when flat. This could be due to the slanted table I was recording on. 
+
 ---
 
 ### 3. Noise and Fourier Transform
