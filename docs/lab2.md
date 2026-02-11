@@ -71,10 +71,19 @@ float roll_a  = atan2(sensor->accY(), sensor->accZ()) * 180.0 / M_PI;
 Serial plotter at pitch and roll orientations (−90°, 0°, +90°):
 
 <div class="lab-media">
+  <p><strong>Pitch -90°, Roll 0°</strong></p>
   <p><a href="{{ 'images/lab2_pitch-90_roll0.png' | relative_url }}"><img src="{{ 'images/lab2_pitch-90_roll0.png' | relative_url }}" alt="Pitch -90 roll 0" style="max-width:100%;" /></a></p>
+  
+  <p><strong>Pitch 0°, Roll 0°</strong></p>
   <p><a href="{{ 'images/lab2_pitch0_roll0.png' | relative_url }}"><img src="{{ 'images/lab2_pitch0_roll0.png' | relative_url }}" alt="Pitch 0 roll 0" style="max-width:100%;" /></a></p>
+  
+  <p><strong>Pitch +90°, Roll 0°</strong></p>
   <p><a href="{{ 'images/lab2_pitch+90_roll0.png' | relative_url }}"><img src="{{ 'images/lab2_pitch+90_roll0.png' | relative_url }}" alt="Pitch +90 roll 0" style="max-width:100%;" /></a></p>
+  
+  <p><strong>Pitch 0°, Roll -90°</strong></p>
   <p><a href="{{ 'images/lab2_pitch0_roll-90.png' | relative_url }}"><img src="{{ 'images/lab2_pitch0_roll-90.png' | relative_url }}" alt="Pitch 0 roll -90" style="max-width:100%;" /></a></p>
+  
+  <p><strong>Pitch 0°, Roll +90°</strong></p>
   <p><a href="{{ 'images/lab2_pitch0_roll+90.png' | relative_url }}"><img src="{{ 'images/lab2_pitch0_roll+90.png' | relative_url }}" alt="Pitch 0 roll +90" style="max-width:100%;" /></a></p>
 </div>
 
