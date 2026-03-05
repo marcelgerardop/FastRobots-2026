@@ -12,21 +12,27 @@ The VL53L1X datasheet lists the default I2C address as 0x52 (8-bit write address
 
 ### Approach to Using 2 ToF Sensors
 
-I chose the **XSHUT pin method**: at boot, I pulled XSHUT LOW on sensor 2 to shut it down, change sensor 1's I2C address to 0x32, then release XSHUT to bring sensor 2 back online at 0x29. This made it so both sensors have unique addresses and can be read independently. I decided to use this method instead of continuously toggling sensors on/off for each read, which wouldve given me a smaller sampling rate and add initialization latency.
+I chose the **XSHUT pin method**: at boot, I pulled XSHUT LOW on sensor 2 to shut it down, changed sensor 1's I2C address from 0x52 to 0x54, then released XSHUT to bring sensor 2 back online at the default 0x52. This made it so both sensors have unique addresses and can be read independently. I decided to use this method instead of continuously toggling sensors on/off for each read, which wouldve given me a smaller sampling rate and add initialization latency.
 
 ```cpp
-// ToF dual-sensor init via XSHUT
+// ToF dual-sensor init via XSHUT (pin 8)
 pinMode(XSHUT_PIN, OUTPUT);
-digitalWrite(XSHUT_PIN, LOW);   // shut down sensor 2
-delay(10);
-distanceSensor1.begin();
-distanceSensor1.setI2CAddress(0x32);  // change sensor 1 address
-digitalWrite(XSHUT_PIN, HIGH);  // bring sensor 2 back up
-delay(10);
-distanceSensor2.begin();         // sensor 2 at default 0x29
-```
+digitalWrite(XSHUT_PIN, LOW);   // shut down XSHUT sensor
+delay(150);
 
-**Lab Soldering Note:** During testing, the second ToF sensor had a bad solder joint on the QWIIC wires, causing an I2C short (all addresses appeared in scans). I The diagnostic sketch confirmed only one sensor was functional, so the lab was completed with a single ToF sensor. The wiring and code for dual sensors is in place for when the second sensor is re-soldered.
+// Init sensor 1 (non-XSHUT), change address to 0x54
+if (distanceSensor1.begin() != 0) {
+    // Address may already be 0x54 from previous run (persists across resets)
+    distanceSensor1.setI2CAddress(0x54);
+    distanceSensor1.begin();
+} else {
+    distanceSensor1.setI2CAddress(0x54);
+}
+
+digitalWrite(XSHUT_PIN, HIGH);  // bring sensor 2 back up
+delay(150);
+distanceSensor2.begin();         // sensor 2 at default 0x52
+```
 
 ### Sensor Placement and Missed Obstacles
 
@@ -50,45 +56,48 @@ I soldered the JST connector to the 650mAh LiPo battery (cutting wires one at a 
 
 ### I2C Scan
 
-Ran the Apollo3 Example05_Wire_I2C scanner. The scan found two devices:
+Ran the Apollo3 Example05_Wire_I2C scanner after the dual-sensor init. The scan found three devices:
 
-- **0x29** — VL53L1X ToF sensor (matches datasheet)
+- **0x29** — VL53L1X ToF sensor 2 (XSHUT sensor, default address 0x52 = 0x29 in 7-bit)
+- **0x2A** — VL53L1X ToF sensor 1 (address changed to 0x54 = 0x2A in 7-bit)
 - **0x69** — ICM-20948 IMU (with AD0_VAL = 1)
 
 <div class="lab-media">
-  <p><a href="{{ 'images/lab3_i2c_scan.png' | relative_url }}"><img src="{{ 'images/lab3_i2c_scan.png' | relative_url }}" alt="I2C scan showing 0x29 and 0x69" style="max-width:100%;" /></a></p>
+  <p><a href="{{ 'images/lab3_i2c_scan.png' | relative_url }}"><img src="{{ 'images/lab3_i2c_scan.png' | relative_url }}" alt="I2C scan showing 0x29, 0x2A, and 0x69" style="max-width:100%;" /></a></p>
 </div>
 
 ### Distance Mode
 
 The VL53L1X has three ranging modes:
 
-1. **Short** (1.3 m max)
+1. **Short** (1.3 m max) - fastest, most accurate at close range
 2. **Medium** (3 m max)
-3. **Long** (4 m, max) - is slower at ~100ms
+3. **Long** (4 m, max) - slower at ~100ms, more susceptible to ambient light
 
-I chose Long mode because a fast-moving robot needs maximum detection range to have enough stopping distance. The ~100ms measurement time is acceptable since the robot's control loop can still react.
+I chose Short mode because for obstacle avoidance the robot needs accurate close-range detection more than long range. Short mode is faster (~30ms vs ~100ms) and less susceptible to ambient light noise, which matters for quick reactions. I tested accuracy by placing a flat object at a known distance (~180mm measured with a ruler) and both sensors read consistently within a few mm of the actual value.
 
 <div class="lab-media">
-  <p><a href="{{ 'images/lab3_tof_read_distance.png' | relative_url }}"><img src="{{ 'images/lab3_tof_read_distance.png' | relative_url }}" alt="ToF read distance serial output" style="max-width:100%;" /></a></p>
+<video src="{{ 'images/lab3_tof_read_distance.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
+<p><a href="{{ 'images/lab3_tof_read_distance.mp4' | relative_url }}">Open video</a> if it doesn't play above.</p>
 </div>
 
 ### Two ToF Sensors + IMU
 
-When I was testing the dual-sensor, the I2C scanner showed all 127 addresses (0x01-0x7E) when both sensors were connected. After some reaserch I found that I had an I2C short caused by a bad solder joint on the second sensor's QWIIC wires. This caused me a big delay on this lab and a bunch of headaches. I confirmed this by running a diagnostic sketch. The XSHUT wire was on the only working sensor (which I had already soldered). After disconnecting the faulty sensor, the bus returned to normal. The dual-sensor XSHUT code I implemented is ready for when the second sensor is re-soldered.
-
-The working sensor and IMU operate correctly on the shared I2C bus.
+Both ToF sensors and the IMU work together on the shared I2C bus. After the XSHUT init sequence, sensor 1 is at 0x54 (0x2A) and sensor 2 is at 0x52 (0x29), so they can be read independently. One gotcha I ran into is that the ToF sensors in continuous ranging mode hog the I2C bus, so I have to stop both sensors' ranging before collecting IMU data and restart them after. The `checkForDataReady()` approach keeps the main loop non-blocking so neither sensor stalls the other.
 
 ### Speed Test Discussion
 
-Looking at the serial output, we see the main loop executes in approximately **1 ms per iteration**. ToF data only appears every ~100 ms when the sensor has new data available (Long mode timing). This is the limiting factor in the ToF sensor's ranging time, not the loop speed. I used `checkForDataReady()` instead of a blocking read which made sure the loop didn't hang.
+Looking at the serial output, the main loop executes in approximately **1-2 ms per iteration**. ToF data only appears every ~43 ms when a sensor has new data available (Short mode timing). The limiting factor is the ToF sensor's ranging time, not the loop speed. I used `checkForDataReady()` instead of a blocking read which made sure the loop didn't hang.
 
 ```cpp
-// Non-blocking ToF read in loop
-if (distanceSensor.checkForDataReady()) {
-    int dist = distanceSensor.getDistance();
-    distanceSensor.clearInterrupt();
-    Serial.print("D:"); Serial.print(dist); Serial.print(" mm");
+// Non-blocking dual ToF read in loop
+if (distanceSensor1.checkForDataReady()) {
+    tof_data1[tof_index] = distanceSensor1.getDistance();
+    distanceSensor1.clearInterrupt();
+}
+if (distanceSensor2.checkForDataReady()) {
+    tof_data2[tof_index] = distanceSensor2.getDistance();
+    distanceSensor2.clearInterrupt();
 }
 ```
 
@@ -98,14 +107,18 @@ if (distanceSensor.checkForDataReady()) {
 
 ### ToF Distance vs Time
 
-I collected the ToF data for 10 seconds on the Artimus using a non-blocking flag based approach (which is the same I used in lab 2). Basically I stored using arrays then sent them over BLE to jupyter for plotting. Below is the code:
+I collected dual ToF data for 10 seconds on the Artimus using a non-blocking flag based approach (which is the same I used in lab 2). Basically I stored both sensors' readings using arrays then sent them over BLE to jupyter for plotting. Below is the code:
 
 ```cpp
 if (tof_collecting && tof_index < TOF_ARRAY_SIZE) {
-    if (distanceSensor.checkForDataReady()) {
+    bool s1_ready = distanceSensor1.checkForDataReady();
+    bool s2_ready = distanceSensor2.checkForDataReady();
+    if (s1_ready || s2_ready) {
         tof_time[tof_index] = millis();
-        tof_data[tof_index] = distanceSensor.getDistance();
-        distanceSensor.clearInterrupt();
+        tof_data1[tof_index] = s1_ready ? distanceSensor1.getDistance() : -1;
+        tof_data2[tof_index] = s2_ready ? distanceSensor2.getDistance() : -1;
+        if (s1_ready) distanceSensor1.clearInterrupt();
+        if (s2_ready) distanceSensor2.clearInterrupt();
         tof_index++;
     }
 }
@@ -117,7 +130,7 @@ if (tof_collecting && tof_index < TOF_ARRAY_SIZE) {
 
 ### IMU Angle vs Time
 
-I collected the IMU data for 5 seconds while tilting/rotating the board, then sent over BLE. The plot shows accelerometer pitch/roll and gyroscope-integrated pitch/roll/yaw. The gyro roll shows significant drift over time (expected without complementary filter correction), while accelerometer values remain bounded and reflect actual tilt. i temporarly paused the ToF ranging during the IMU collection to prevent I2C bus contention between the two sensors sharing the same bus.
+I collected the IMU data while tilting/rotating the board, then sent over BLE. The plot shows accelerometer pitch/roll and gyroscope-integrated pitch/roll/yaw. The gyro yaw shows drift over time (expected without complementary filter correction), while accelerometer values remain bounded and reflect actual tilt. I temporarily paused both ToF sensors' ranging during IMU collection to prevent I2C bus contention.
 
 <div class="lab-media">
   <p><a href="{{ 'images/lab3_imu_angle_vs_time.png' | relative_url }}"><img src="{{ 'images/lab3_imu_angle_vs_time.png' | relative_url }}" alt="IMU angle vs time plot" style="max-width:100%;" /></a></p>
