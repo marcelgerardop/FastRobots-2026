@@ -38,7 +38,15 @@ myICM.resetDMP();
 myICM.resetFIFO();
 ```
 
-One thing I ran into was the DMP FIFO backing up. I had to drain it completely each loop with a while loop, otherwise the data would pile up and the readings got delayed.
+Here I rotated the robot in a full circle by hand with the PID off. I ran this test twice and the second time it didn't reset, so the yaw starts around 280 degrees. But you can see it tracks the hand rotation smoothly.
+
+<div class="lab-media">
+  <p><a href="{{ 'images/lab6_dmp_hand_rotation.png' | relative_url }}"><img src="{{ 'images/lab6_dmp_hand_rotation.png' | relative_url }}" alt="DMP hand rotation test" style="max-width:100%;" /></a></p>
+</div>
+
+##### DMP yaw during a hand rotation test. No PID, just verifying the sensor tracks correctly.
+
+One thing I ran into was the DMP FIFO backing up. I had to drain it completely each loop with a while loop, otherwise the data would pile up and the readings got delayed. I also had to make sure `current_yaw` resets to 0 when starting the PID so the setpoint is always relative to where the robot is facing at that moment.
 
 ---
 
@@ -101,7 +109,7 @@ The ICM-20948 gyroscope default range is ±250 dps. I thought that was plenty si
 
 Final gains: **Kp=3.0, Kd=1.0**, dead zone=5 degrees, deadband=70 PWM, max PWM=150.
 
-**90 degree step response:**
+### 90 Degree Step Response
 
 <div class="lab-media">
   <p><a href="{{ 'images/lab6_yaw_vs_setpoint_90_degrees.png' | relative_url }}"><img src="{{ 'images/lab6_yaw_vs_setpoint_90_degrees.png' | relative_url }}" alt="Yaw vs setpoint 90 degrees" style="max-width:100%;" /></a></p>
@@ -120,7 +128,7 @@ Final gains: **Kp=3.0, Kd=1.0**, dead zone=5 degrees, deadband=70 PWM, max PWM=1
 <p><a href="{{ 'images/lab6_clean_90_degree_spin_video.mp4' | relative_url }}">Open video</a> if it doesn't play above.</p>
 </div>
 
-**180 degree step response:**
+### 180 Degree Step Response
 
 <div class="lab-media">
   <p><a href="{{ 'images/lab6_yaw_vs_setpoint_180_degrees.png' | relative_url }}"><img src="{{ 'images/lab6_yaw_vs_setpoint_180_degrees.png' | relative_url }}" alt="Yaw vs setpoint 180 degrees" style="max-width:100%;" /></a></p>
@@ -134,7 +142,7 @@ Final gains: **Kp=3.0, Kd=1.0**, dead zone=5 degrees, deadband=70 PWM, max PWM=1
 
 ##### Motor command for 180 degree trial. Briefly reverses when it overshoots, then holds at deadband trying to close the remaining gap.
 
-**Kick / disturbance test:**
+### Kick / Disturbance Test
 
 <div class="lab-media">
 <video src="{{ 'images/lab6_kick_test_video.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
