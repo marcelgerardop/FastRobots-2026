@@ -99,9 +99,9 @@ I started P-only and added D:
 
 ## Range and Sampling
 
-The DMP outputs at about 56 Hz. I initially logged every loop iteration (~1250 Hz) which filled my 1500-sample array in under a second. Had to find this out using Jupyter because my data collected was not effective for plotting. Turned out 89% of the samples were duplicates. I fixed this by only logging when new DMP data arrives, which gives about 27 seconds of recording at 56 Hz.
+The DMP outputs at about 56 Hz. I initially logged every loop iteration (~1250 Hz) which burned through my array in under a second with 89% duplicate samples. Fixed by only logging when new DMP data arrives.
 
-The ICM-20948 gyroscope default range is ±250 dps. I thought that was plenty since the robot doesn't spin faster than maybe 100 dps.
+The gyroscope default range is ±250 dps, plenty since the robot doesn't spin faster than maybe 100 dps.
 
 ---
 
