@@ -64,9 +64,9 @@ title: Home
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="card card-coming-soon h-100">
+    <div class="card h-100">
       <div class="card-body">
-        <h3 class="card-title h6">Lab 7: Kalman Filtering <span class="badge badge-coming text-muted">Coming soon</span></h3>
+        <h3 class="card-title h6"><a href="{{ 'lab7.html' | relative_url }}">Lab 7: Kalman Filtering</a></h3>
       </div>
     </div>
   </div>
