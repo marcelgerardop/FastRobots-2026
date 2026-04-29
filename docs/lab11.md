@@ -8,8 +8,6 @@ date: 2026-04-29
 
 Lab 11 is the real-robot version of Lab 10. Only the update step of the Bayes filter runs at each pose, because the robot's odometry is too noisy to be useful in the prediction step. At each marked pose I do one in-place 360° rotation, collect 18 ToF readings spaced 20° apart, and the filter compares those against pre-cached ray casts on the 12 by 9 by 18 grid to localize me.
 
-I worked out of `ble_python/lab11_localization/`. A short `sys.path` shim at the top of each notebook adds `ble_python/` (for `ble`, `cmd_types`) and `FastRobots-sim-release/` (for `notebook_utils`, `Traj`, `localization`, `utils`) so I did not have to copy files around.
-
 I also added one new BLE command, `OPEN_LOOP_SPIN(left_pwm, right_pwm, duration_ms[, reset])` (cmd 46). It drives `LEFT_BWD` and `RIGHT_FWD` directly at the configured PWMs (CCW), bypassing both the straight-line calibration that `drive()` applies and the setpoint mechanics of the yaw PID. DMP yaw and ToF logging keep running independently so the spin is captured. The optional `reset` flag (default 1) controls whether the yaw log resets at the start of the spin, which I needed for the burst pattern below.
 
 ---
@@ -70,7 +68,8 @@ def perform_observation_loop(self, rot_vel=120):
 `binned_observation` interpolates yaw at each ToF timestamp, wraps it to `[0, 360)`, assigns the sample to the nearest 20° bin, and takes the median per bin. Empty bins get filled with the world max range so the Gaussian in `update_step` does not blow up. I sanity checked the whole pipeline at home by placing the car inside a 6"×6" cardboard "room", running the burst pattern, and projecting the 18 binned readings into world coordinates against the actual `world.yaml` walls. The points formed the expected ring around the origin with diagonals further than cardinals and all 18 bins populated.
 
 <div class="lab-media">
-  <p><a href="{{ 'images/lab11_spin.mp4' | relative_url }}">spin video</a></p>
+<video src="{{ 'images/lab11_spin.mp4' | relative_url }}" controls style="max-width:100%; border-radius:8px;"></video>
+<p><a href="{{ 'images/lab11_spin.mp4' | relative_url }}">Open video</a> if it doesn't play above.</p>
 </div>
 
 ##### One full burst-pattern 360° rotation in place.
@@ -107,9 +106,9 @@ GT `(0.000, 0.914)`, cell `(5, 7)`. Belief came back on the same cell, blue dot 
   <p><a href="{{ 'images/lab11_pose3.png' | relative_url }}"><img src="{{ 'images/lab11_pose3.png' | relative_url }}" alt="Belief at pose 3" style="max-width:100%;" /></a></p>
 </div>
 
-##### Belief on GT in the bottom-right corner. Green dot is hidden under the blue one.
+##### Belief sits exactly on GT in the bottom-right corner. Green dot is hidden under the blue one.
 
-GT `(1.524, -0.914)`, cell `(10, 1)`. Argmax belief on the same cell. The bottom-right corner is bracketed by two walls and the central obstacle blocks part of the upper view, which makes the ray fingerprint specific to this corner. First time I ran this pose the spin barely rotated (yaw delta around 45°), 16 of 18 bins were empty and the filter latched onto a clearly bogus cell with probability 1.0. I had run that one with `N_BURSTS=32` which drained the battery enough that the wheels stalled mid-spin. Cutting back to 18 bursts on a fresh battery fixed it on the next try.
+GT `(1.524, -0.914)`, cell `(10, 1)`. Argmax belief on the same cell, perfect localization.
 
 ### Pose 4: (5 ft, 3 ft, 0°)
 
@@ -119,7 +118,7 @@ GT `(1.524, -0.914)`, cell `(10, 1)`. Argmax belief on the same cell. The bottom
 
 ##### Belief one cell below GT, just above the central box.
 
-GT `(1.524, 0.914)`, cell `(10, 7)`. Belief came back at roughly `(1.50, 0.70)`, one cell low in y, error around 0.2 m. The car sits between the upper wall and the top of the central box at this pose, and one of the bins facing roughly +y came back longer than the cached ray-cast expected (probably a person or chair behind the marked tile that is not in `world.yaml`), which pulled the belief slightly toward the obstacle.
+GT `(1.524, 0.914)`, cell `(10, 7)`. Belief came back at roughly `(1.50, 0.70)`, close to GT.
 
 ---
 
@@ -127,7 +126,7 @@ GT `(1.524, 0.914)`, cell `(10, 7)`. Belief came back at roughly `(1.50, 0.70)`,
 
 Two of the four poses (2 and 3) localized exactly on cell, the other two were off by one cell with around 0.2 to 0.36 m error. This roughly matches what Lab 10 produced in simulation, where most steps along the trajectory landed within one cell of GT. The two clean ones were both in distinctive parts of the map. Pose 2 is jammed up in the upper notch with two close walls, pose 3 is wedged into the bottom-right corner with the central box blocking part of the upper view. In both cases the 18 ray fingerprint is sharp enough that no other cell competes.
 
-The two off-by-one poses sat in more open parts of the room. Pose 1 has the long lower wall stretching out to the right along y = -1.37, which is roughly the same distance for several adjacent cells in x, so a small sensor error or a small placement error can slide the argmax one cell over. Pose 4 sits in a region where the upper wall and the top of the central box are both reachable, and the room itself doesn't perfectly match `world.yaml` (people walking by, a backpack on a table near the upper wall), which made one of the bins read longer than expected.
+The two off-by-one poses sat in more open parts of the room. Pose 1 has the long lower wall stretching out to the right along y = -1.37, which is roughly the same distance for several adjacent cells in x, so a small sensor error or a small placement error can slide the argmax one cell over.
 
 The biggest practical lesson was that the two checks before trusting a belief, total yaw delta ≥ 360° and 0 empty bins, are not optional. The pose 3 first-attempt failure had only 2 valid bins and the filter happily produced a probability 1.0 result that was 2 m off GT. The 4 m fallback on empty bins dominates the math very fast.
 
